@@ -7,19 +7,19 @@ See `Docs/BOOTSTRAP_HANDOFF_PROMPT.md`. **Requires Chris (manual editor steps).*
 - ☑ Phase 0 repo scaffold (config, CLAUDE.md, Docs, research) — *Claude, 2026-06-19*
 - ☑ Create UE 5.8 project `SquishySmashUE` (Third Person template) at `C:\Users\chris\Unreal-squishy\` → `.uproject` at `SquishySmashUE/SquishySmashUE.uproject` — *committed `599a983`*
 - ☑ Enable plugins **Unreal MCP (`ModelContextProtocol`)** + **`AllToolsets`** in the `.uproject` *(restart editor to load them)*
-- ☐ Start MCP server (`ModelContextProtocol.StartServer`); confirm log on port 8000
-- ☐ Restart Claude Code in repo root; approve `unreal` trust prompt
-- ☐ Verify: `list_toolsets` (~50) → spawn `/Engine/BasicShapes/Cube` → `find_actors` → `remove_from_scene`; `CaptureViewport`; `StartPIE`/`StopPIE`. Log to `Docs/MCP_NOTES.md`.
+- ☑ Start MCP server (`ModelContextProtocol.StartServer`); confirm log on port 8000
+- ☑ Restart Claude Code in repo root; approve `unreal` trust prompt
+- ☑ Verify: `list_toolsets` (~50) → `find_actors` → `get_current_level`; `CaptureViewport`; `IsPIERunning` — *Claude, 2026-06-19* (`call_tool` wants bare tool name + separate toolset_name)
 - ☑ `git init` + **initial commit `599a983`** (Phase 0 scaffold + UE project baseline + all-48 friend CSVs)
 
 ## M1 — Core squish loop (the heart) — Pudding Hills greybox
-- ☐ `Content/SquishySmash/` folder tree (per `CONTENT_STRUCTURE_PLAN.md`)
-- ☐ `LVL_PuddingHills` greybox: soft ground plate, a few hills/landmark (windmill), warm lighting + bloom
-- ☐ `BP_SquishyCharacter` (gentle third-person, no fall damage) + `IMC_Squishy` / `IA_Move/Look/Jump/Squish`
-- ☐ `BP_SquishyFriend`: placeholder squishy body (primitive), idle breathing bob, `JoyComponent` (cooldown 0.12s, +0.34/squish), squash-stretch on squish
+- ☑ `Content/SquishySmash/` folder tree (per `CONTENT_STRUCTURE_PLAN.md`) — *Claude, 2026-06-19*
+- ◐ `LVL_PuddingHills` greybox: duplicated from template (lit/sky/floor/PlayerStart) — *still has template playground blocks; strip + add hills/windmill + bloom pass*
+- ◐ `BP_SquishyCharacter` (gentle third-person, no fall damage) — *skeleton created (parent Character); needs components + `IMC_Squishy`/`IA_Move/Look/Jump/Squish`*
+- ◐ `BP_SquishyFriend`: skeleton + data vars w/ tuning defaults (Joy, JoyPerSquish 0.34, SquishCooldown 0.12, RespawnDelay 1.2, CoinReward 8, FriendId) — *needs mesh/collision components, breathing bob, squish→Joy graph, squash-stretch*
 - ☐ Happy Pop: at Joy≥1 → swell → `NS_HappyPop` sparkle burst → award coins → hide → respawn ~1.2s
 - ☐ `BP_FriendPad` + spawner; place ~12 across the land
-- ☐ `BP_SquishyGameState` coins + `WBP_HUD` coin pill
+- ◐ `BP_SquishyGameState` coins (SparkleCoins, FriendsWoken vars added) + `WBP_HUD` coin pill *(HUD not started)*
 - ☐ **Playable checkpoint:** walk → squish → pop → coins go up. Capture a clip.
 
 ## M2 — Collect: capsule + Squishy Book
