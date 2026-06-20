@@ -2,6 +2,23 @@
 
 Newest first. Format: **date — task — files/assets — what worked — what broke — next.**
 
+## 2026-06-19 — Imported all 51 squishy 3D meshes + mapped roster  (Claude)
+- **Found existing 3D models** (Chris's earlier work): 51 squishy meshes as both `.fbx` (`Roblox-squishy/tools/mesh_pipeline/output/`, the cleaner game export + `manifest.json`) and `.glb` (`Squishy-smash/_tmp_3d_renders/`). AI-generated (~30 credits each), geometry-only (no embedded materials).
+- **Decision (Chris):** import all 51 now + map the 16 Pudding Hills friends, then resume the loop.
+- **Verified import path:** `StaticMeshTools.import_file` (FBX→StaticMesh). Probe (`soft_dumpling`): bounds ≈ **191×191×145 cm, centered on origin** (pivot = center, not base), **12,148 tris**, one empty material slot. Geometry-only is on-brand — design wants our tinted `M_JellyPlush` + per-friend `SuggestedTintHex`, not raw AI textures.
+- **Bulk import via `ProgrammaticToolset.execute_tool_script`** (one sandboxed call, per-file try/except): imported the remaining **50 → 51/51 total, 0 failures**, in `/Game/SquishySmash/Meshes` as `SM_<name>`. (Far cheaper than 51 round-trips.)
+- **Mapping rule (clean):** friend CSV `Name` == mesh filename, so **FriendId → `/Game/SquishySmash/Meshes/SM_<Name>`**. All 16 Pudding Hills friends (001 soft_dumpling … 016 celestial_dumpling_core) have meshes. No separate mapping table needed; DataTable can derive the path.
+- **Scale/pivot pass (applied on the Body component, since import can't bake asset scale):** friend `Body` set to `SM_peach_mochi`, **RelativeScale3D 0.5** (≈72 cm tall), **RelativeLocation Z +36** (base at actor origin for ground placement). Verified on the SCS template + compiled + saved.
+- **Collision:** deferred — line traces hit complex (per-poly) collision by default, so squish-trace should work without generated simple collision; will `generate_convex_collisions` only if PIE trace misses.
+- **Next:** resume the squish loop — author `BP_SquishyFriend` `Squish`→`HappyPop`→`Respawn` + breathing (mesh-agnostic, unaffected by the mesh swap), then character + input, then place + PIE.
+
+## 2026-06-19 — M1 batch 2 start: verified component + graph-DSL pipelines  (Claude)
+- **Pushed** batch 1 to GitHub `cryptochris8/unreal-squishy` (renamed branch `master`→`main`; commit `53297d1`).
+- **Verified `PrimitiveTools` adds SCS components to a Blueprint** by calling `add_sphere` on the **CDO** (`Default__BP_SquishyFriend_C`): added `Body` sphere (r=50). CDO reads `Body=None` (expected for SCS templates), but a **spawned instance** has a real `Body` component under `DefaultSceneRoot` — confirmed it persists. (Spawn landed in the still-loaded `Lvl_ThirdPerson`, not `LVL_PuddingHills` — must `load_level` to work in our map; test actor removed.)
+- **Verified graph-DSL authoring** (`write_graph_dsl`/`read_graph_dsl`): implemented `BP_SquishyGameState.AddSparkleCoins(Amount:int)` → `SetSparkleCoins(GetSparkleCoins + Amount)`. Compiles clean with **warnings-as-errors**, reads back exact. DSL patterns that worked w/o discovery: `Variables|Default|Get<Var>` / `Set<Var>`, `(+ ...)`, `(fn Name (Params) ...)`.
+- **BP_SquishyFriend** now has `Body` sphere component + state vars `LastSquishTime`(float), `bPopped`(bool) added (alongside the §3 tuning vars). Compiled + saved.
+- **Next (uncommitted):** author friend `Squish`→`HappyPop`→`Respawn` graph (cooldown 0.12 via game-time delta, Joy += 0.34, squash-stretch on Body, at Joy≥1 hide+disable-collision+timer 1.2s→respawn, award coins via GameState). Then `BP_SquishyCharacter` movement + Enhanced Input (`IMC_Squishy`/`IA_*`) + look-trace that calls the friend's Squish. Then `load_level` LVL_PuddingHills, strip template blocks, place friends, PIE test.
+
 ## 2026-06-19 — MCP live + M1 foundations batch  (Claude)
 - **MCP verified live:** Unreal `ModelContextProtocol` plugin responding inside the editor; `AllToolsets` active (~50 toolsets). Confirmed the `call_tool` contract: **bare** `tool_name` + separate `toolset_name` (fully-qualified names error). `CaptureViewport` needs explicit `null`s for optional params and returns a ~2 MB base64 PNG (too big to inline — use sparingly).
 - **Folder tree:** created `Content/SquishySmash/{Blueprints/{Character,Friends,Gameplay,UI},Maps,Materials,Meshes,Niagara,Audio,Data,Input,Cards}` via `AssetTools.create_folder`.
