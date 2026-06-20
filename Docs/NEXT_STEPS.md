@@ -16,7 +16,7 @@ See `Docs/BOOTSTRAP_HANDOFF_PROMPT.md`. **Requires Chris (manual editor steps).*
 - ☑ `Content/SquishySmash/` folder tree (per `CONTENT_STRUCTURE_PLAN.md`) — *Claude, 2026-06-19*
 - ◐ `LVL_PuddingHills` greybox: duplicated from template (lit/sky/floor/PlayerStart) — *still has template playground blocks; strip + add hills/windmill + bloom pass*
 - ◐ `BP_SquishyCharacter` (gentle third-person, no fall damage) — *skeleton created (parent Character); needs components + `IMC_Squishy`/`IA_Move/Look/Jump/Squish`*
-- ◐ `BP_SquishyFriend`: skeleton + data vars w/ tuning defaults (Joy, JoyPerSquish 0.34, SquishCooldown 0.12, RespawnDelay 1.2, CoinReward 8, FriendId; +LastSquishTime, bPopped) + **`Body` = real mesh `SM_peach_mochi` (scale 0.5, Z+36)** — *needs breathing bob, squish→Joy graph, squash-stretch, Happy Pop*
+- ◐ `BP_SquishyFriend`: data vars + `Body`=`SM_peach_mochi` (scale 0.5, Z+36) + **`Squish`/`Respawn` graph DONE** (cooldown→Joy→Happy Pop: hide+disable collision+1.2s respawn+award coins; compiles clean) — *deferred juice: squash-stretch + breathing bob*
 - ☑ **Imported all 51 squishy 3D meshes** → `/Game/SquishySmash/Meshes/SM_<name>` (geometry-only); mapping = FriendId `Name`→`SM_<Name>`. *Claude, 2026-06-19*
 - ☐ Happy Pop: at Joy≥1 → swell → `NS_HappyPop` sparkle burst → award coins → hide → respawn ~1.2s
 - ☐ `BP_FriendPad` + spawner; place ~12 across the land

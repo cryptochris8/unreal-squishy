@@ -2,6 +2,14 @@
 
 Newest first. Format: **date — task — files/assets — what worked — what broke — next.**
 
+## 2026-06-19 — BP_SquishyFriend squish loop authored (graph DSL)  (Claude)
+- **Authored the friend's core loop** in the EventGraph via `write_graph_dsl` — compiles clean with **warnings-as-errors**:
+  - `Squish` (custom event, public — callable by the character): if `not Popped` AND `GameTime - LastSquishTime >= SquishCooldown(0.12)` → set LastSquishTime, `Joy += JoyPerSquish(0.34)`; when `Joy >= 1.0` → set `Popped`, `SetActorHiddenInGame(true)`, `SetActorEnableCollision(false)`, `SetTimerByFunctionName("Respawn", RespawnDelay 1.2)`, then cast GameState→`BP_SquishyGameState` and `AddSparkleCoins(CoinReward)`.
+  - `Respawn` (custom event): `Joy=0`, `Popped=false`, un-hide, re-enable collision. Pop visuals run *before* the cast, so the friend still pops even if the GameState isn't our class yet (pre-GameMode-wiring).
+- **DSL lessons (recorded for reuse):** custom events must be pre-created with `add_event` then referenced as `(event Custom|<Name> …)` — `(event <Name>)` fails. Bool var `bPopped` → accessors `Get/SetPopped` (the `b` is stripped). `SetActorHiddenInGame` pin is `bNewHidden` (not `NewHidden`). A multi-exec node (e.g. Cast) **terminates** the enclosing exec flow, so anything that must run regardless goes *before* it. Discover names with `find_node_types` / pins with `get_node_type_pins`.
+- **Deferred (juice, not blocking):** squash-stretch on squish + idle breathing bob → feel pass.
+- **Next:** `BP_SquishyCharacter` (camera, gentle movement, Enhanced Input) with a look line-trace that calls the hit friend's `Squish`; reuse the ThirdPerson template's input assets + add `IA_Squish`. Then set GameMode, `load_level` LVL_PuddingHills, place friends, **PIE**.
+
 ## 2026-06-19 — Imported all 51 squishy 3D meshes + mapped roster  (Claude)
 - **Found existing 3D models** (Chris's earlier work): 51 squishy meshes as both `.fbx` (`Roblox-squishy/tools/mesh_pipeline/output/`, the cleaner game export + `manifest.json`) and `.glb` (`Squishy-smash/_tmp_3d_renders/`). AI-generated (~30 credits each), geometry-only (no embedded materials).
 - **Decision (Chris):** import all 51 now + map the 16 Pudding Hills friends, then resume the loop.
