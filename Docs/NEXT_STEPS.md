@@ -5,12 +5,12 @@ Status legend: ☐ todo · ◐ in progress · ☑ done. Work top-down; keep it p
 ## M0 — Bootstrap (bring the MCP live) — BLOCKS EVERYTHING
 See `Docs/BOOTSTRAP_HANDOFF_PROMPT.md`. **Requires Chris (manual editor steps).**
 - ☑ Phase 0 repo scaffold (config, CLAUDE.md, Docs, research) — *Claude, 2026-06-19*
-- ☐ Create UE 5.8 project `SquishySmashUE` (Third Person, **Blueprint**, Starter Content ON, Raytracing OFF) at `C:\Users\chris\Unreal-squishy\` → `.uproject` at `SquishySmashUE/SquishySmashUE.uproject`
-- ☐ Enable plugins **Unreal MCP (`ModelContextProtocol`)** + **`AllToolsets`**; restart editor
+- ☑ Create UE 5.8 project `SquishySmashUE` (Third Person template) at `C:\Users\chris\Unreal-squishy\` → `.uproject` at `SquishySmashUE/SquishySmashUE.uproject` — *committed `599a983`*
+- ☑ Enable plugins **Unreal MCP (`ModelContextProtocol`)** + **`AllToolsets`** in the `.uproject` *(restart editor to load them)*
 - ☐ Start MCP server (`ModelContextProtocol.StartServer`); confirm log on port 8000
 - ☐ Restart Claude Code in repo root; approve `unreal` trust prompt
 - ☐ Verify: `list_toolsets` (~50) → spawn `/Engine/BasicShapes/Cube` → `find_actors` → `remove_from_scene`; `CaptureViewport`; `StartPIE`/`StopPIE`. Log to `Docs/MCP_NOTES.md`.
-- ☐ `git init` done in scaffold; first commit after smoke test passes
+- ☑ `git init` + **initial commit `599a983`** (Phase 0 scaffold + UE project baseline + all-48 friend CSVs)
 
 ## M1 — Core squish loop (the heart) — Pudding Hills greybox
 - ☐ `Content/SquishySmash/` folder tree (per `CONTENT_STRUCTURE_PLAN.md`)

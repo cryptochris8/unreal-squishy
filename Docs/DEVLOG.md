@@ -8,5 +8,7 @@ Newest first. Format: **date — task — files/assets — what worked — what 
 - **Scaffolded repo:** `.mcp.json`, `.gitignore`, `README.md`, `CLAUDE.md`, and `Docs/{GAME_BLUEPRINT, NEXT_STEPS, MCP_NOTES, BOOTSTRAP_HANDOFF_PROMPT, BUILD_NOTES, BUGS, CONTENT_STRUCTURE_PLAN}.md`. `git init`.
 - **Worked:** confirmed canonical IP at `C:\Users\chris\Squishy-smash\` (incl. finished Lost Sparkle book spreads) and proven tuning from the Roblox source.
 - **Pre-staged content (editor-independent prep):** extracted **all three land rosters — 48 launch friends** — from `Roblox-squishy/data/raw/` into import-ready DataTable CSVs (`Docs/data/{PuddingHills,GooCoast,MoonlitHollow}_Friends.csv`) + provenance README.
-- **Blocked on:** the Unreal MCP isn't connected (no `.uproject` yet; only the unrelated global Roblox MCP is in this session).
-- **Next:** Chris completes `Docs/BOOTSTRAP_HANDOFF_PROMPT.md` (create UE5.8 project → enable `ModelContextProtocol` + `AllToolsets` → start server → restart Claude Code) → then Claude runs the MCP smoke test and starts **M1** (Pudding Hills core squish loop).
+- **Committed** Phase 0 + the **newly-created `SquishySmashUE` UE 5.8 Third Person project** as the baseline (`599a983`); `.gitignore` correctly excluded Binaries/Intermediate/Saved. *(Commit message body says "no .uproject yet" — stale: the project landed in the same `git add -A`.)*
+- **Project state:** Chris created `SquishySmashUE` and **enabled `ModelContextProtocol` + `AllToolsets`** in the `.uproject`. No MCP auto-start in committed Config → server needs a manual start.
+- **Remaining bootstrap (runtime):** restart editor (load plugins) → `ModelContextProtocol.StartServer` (confirm port 8000) → restart Claude Code (loads `.mcp.json`, approve `unreal`).
+- **Next:** run the MCP smoke test, then start **M1** (Pudding Hills core squish loop) from `NEXT_STEPS.md`.

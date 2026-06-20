@@ -21,7 +21,7 @@ Tune by feel; keep it playable every step. Multiplayer, the other two lands (Goo
 ## 3. Current state (honest, 2026-06-19)
 
 - **Phase 0 scaffolding complete** (this repo): config, this brain, design (`Docs/GAME_BLUEPRINT.md`), backlog (`Docs/NEXT_STEPS.md`), deep research (`Docs/research/`).
-- **No `.uproject` yet** and **the Unreal MCP is NOT connected to this Claude session** — only the unrelated **global** `Roblox_Studio` MCP is. To build in-editor, complete **`Docs/BOOTSTRAP_HANDOFF_PROMPT.md`** (create UE 5.8 project → enable plugins → start MCP server → restart Claude Code).
+- **UE 5.8 project `SquishySmashUE` created + committed** (Third Person template; `.uproject` at `SquishySmashUE/SquishySmashUE.uproject`, baseline commit `599a983`). **`ModelContextProtocol` + `AllToolsets` are enabled** in the `.uproject`. **Remaining bootstrap (runtime only):** restart the editor so the plugins load → **start the MCP server** (console `ModelContextProtocol.StartServer`, confirm `port 8000` log) → **restart Claude Code** so it loads `.mcp.json` + approve the `unreal` trust prompt. Until then, this session has only the unrelated **global** `Roblox_Studio` MCP. Steps: `Docs/BOOTSTRAP_HANDOFF_PROMPT.md`.
 - The Unreal MCP is Epic's built-in **`ModelContextProtocol`** plugin (Experimental, ships in UE 5.8): an HTTP MCP server **running inside the live editor** at `http://127.0.0.1:8000/mcp`. It does **not** auto-start. `.mcp.json` (repo root) registers it; **`AllToolsets`** must also be enabled to get world-building tools. Full detail: `Docs/MCP_NOTES.md`.
 
 ## 4. READ-ONLY sources of truth (never modify)
