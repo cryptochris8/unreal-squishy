@@ -1,0 +1,32 @@
+# ===== Unreal Engine generated (never commit) =====
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+DerivedDataCache*/
+
+# Visual Studio / Rider / IDE
+.vs/
+.idea/
+*.VC.db
+*.VC.opendb
+*.opensdf
+*.opendb
+*.sdf
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large media scratch (keep the repo lean; store finals deliberately)
+*.tmp
+
+# ===== Keep (game content + config + project file ARE tracked) =====
+# Content/ (*.uasset, *.umap), Config/, *.uproject, Docs/, CLAUDE.md, .mcp.json
+!.gitignore

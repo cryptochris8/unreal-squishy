@@ -1,0 +1,17 @@
+Name,DisplayName,Pack,Zone,Rarity,CoinReward,BodyArchetype,ParticlePreset,SfxSet,CardNumber,CardArtAsset,SuggestedTintHex
+blushy_bun_bunny,Blushy Bun Bunny,CreepyCute,MoonlitHollow,Common,12,Bunny,pink_soup_burst,creature_giggle_pack,033/048,T_Card_033,#F4E6EE
+squish_bat,Squish Bat,CreepyCute,MoonlitHollow,Common,12,Bat,purple_monster_burst,creature_giggle_pack,034/048,T_Card_034,#B084F2
+puff_ghost,Puff Ghost,CreepyCute,MoonlitHollow,Common,12,Ghost,cream_puff_burst,creature_giggle_pack,035/048,T_Card_035,#EDE7FA
+wobble_kitty,Wobble Kitty,CreepyCute,MoonlitHollow,Common,13,Cat,pink_soup_burst,creature_giggle_pack,036/048,T_Card_036,#D8B6F0
+tiny_blob_monster,Tiny Blob Monster,CreepyCute,MoonlitHollow,Common,12,Blob,green_goo_burst,creature_giggle_pack,037/048,T_Card_037,#B6FF5C
+soft_fang_critter,Soft Fang Critter,CreepyCute,MoonlitHollow,Common,13,Critter,pink_soup_burst,creature_giggle_pack,038/048,T_Card_038,#FFAFCB
+sleepy_slime_pet,Sleepy Slime Pet,CreepyCute,MoonlitHollow,Common,12,Slime,blue_jelly_burst,creature_giggle_pack,039/048,T_Card_039,#9FD8FF
+round_eared_creature,Round Eared Creature,CreepyCute,MoonlitHollow,Common,18,Creature,purple_monster_burst,creature_giggle_pack,040/048,T_Card_040,#C6A4F5
+star_eyed_bunny,Star-Eyed Bunny,CreepyCute,MoonlitHollow,Rare,22,Bunny,cream_puff_burst,creature_giggle_pack,041/048,T_Card_041,#EFE3C8
+moon_bat_blob,Moon Bat Blob,CreepyCute,MoonlitHollow,Rare,22,Bat,purple_monster_burst,creature_giggle_pack,042/048,T_Card_042,#8E7FE6
+glow_ghost_puff,Glow Ghost Puff,CreepyCute,MoonlitHollow,Rare,24,Ghost,cream_puff_burst,creature_giggle_pack,043/048,T_Card_043,#E8FBD9
+candy_fang_creature,Candy Fang Creature,CreepyCute,MoonlitHollow,Rare,20,Creature,purple_monster_burst,creature_giggle_pack,044/048,T_Card_044,#D98FE8
+dream_eater_squish,Dream Eater Squish,CreepyCute,MoonlitHollow,Epic,36,Creature,purple_monster_burst,creature_giggle_pack,045/048,T_Card_045,#7A5BD0
+arcane_wobble_kitty,Arcane Wobble Kitty,CreepyCute,MoonlitHollow,Epic,36,Cat,purple_monster_burst,creature_giggle_pack,046/048,T_Card_046,#9A6BE8
+phantom_jelly_beast,Phantom Jelly Beast,CreepyCute,MoonlitHollow,Epic,36,Blob,blue_jelly_burst,creature_giggle_pack,047/048,T_Card_047,#A9C7FF
+mythic_plush_familiar,Mythic Plush Familiar,CreepyCute,MoonlitHollow,Mythic,140,Familiar,cream_puff_burst,creature_giggle_pack,048/048,T_Card_048,#FFE7B8

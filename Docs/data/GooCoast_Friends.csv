@@ -1,0 +1,17 @@
+Name,DisplayName,Pack,Zone,Rarity,CoinReward,BodyArchetype,ParticlePreset,SfxSet,CardNumber,CardArtAsset,SuggestedTintHex
+goo_ball,Goo Ball,GooFidgets,GooCoast,Common,14,GooBall,green_goo_burst,wet_pop_goo_pack,017/048,T_Card_017,#B6FF5C
+bubble_blob,Bubble Blob,GooFidgets,GooCoast,Common,10,GooBall,green_goo_burst,wet_pop_goo_pack,018/048,T_Card_018,#9BF3D0
+stretch_cube,Stretch Cube,GooFidgets,GooCoast,Common,11,StressBall,pink_soup_burst,wet_pop_goo_pack,019/048,T_Card_019,#FFC0CB
+soft_stress_orb,Soft Stress Orb,GooFidgets,GooCoast,Common,10,StressBall,cream_puff_burst,wet_pop_goo_pack,020/048,T_Card_020,#FBE9A8
+jelly_pad,Jelly Pad,GooFidgets,GooCoast,Common,10,JellyCube,blue_jelly_burst,wet_pop_goo_pack,021/048,T_Card_021,#7FE7FF
+sticky_pop_ball,Sticky Pop Ball,GooFidgets,GooCoast,Common,11,GooBall,purple_monster_burst,wet_pop_goo_pack,022/048,T_Card_022,#C9A0FF
+wobble_drop,Wobble Drop,GooFidgets,GooCoast,Common,10,JellyCube,blue_jelly_burst,wet_pop_goo_pack,023/048,T_Card_023,#8FD9FF
+squish_capsule,Squish Capsule,GooFidgets,GooCoast,Common,10,JellyCube,blue_jelly_burst,wet_pop_goo_pack,024/048,T_Card_024,#A7D8FF
+glitter_goo_ball,Glitter Goo Ball,GooFidgets,GooCoast,Rare,18,GooBall,green_goo_burst,wet_pop_goo_pack,025/048,T_Card_025,#C6FF6E
+shockwave_blob,Shockwave Blob,GooFidgets,GooCoast,Rare,18,GooBall,blue_jelly_burst,wet_pop_goo_pack,026/048,T_Card_026,#6FE0FF
+frost_gel_cube,Frost Gel Cube,GooFidgets,GooCoast,Rare,19,JellyCube,blue_jelly_burst,wet_pop_goo_pack,027/048,T_Card_027,#CDEBFF
+prism_stress_orb,Prism Stress Orb,GooFidgets,GooCoast,Rare,19,StressBall,blue_jelly_burst,wet_pop_goo_pack,028/048,T_Card_028,#BFA8FF
+plasma_goo_ball,Plasma Goo Ball,GooFidgets,GooCoast,Epic,32,GooBall,pink_soup_burst,wet_pop_goo_pack,029/048,T_Card_029,#FF7FB0
+aurora_stretch_cube,Aurora Stretch Cube,GooFidgets,GooCoast,Epic,32,StressBall,green_goo_burst,wet_pop_goo_pack,030/048,T_Card_030,#7CFFD0
+cosmic_jelly_pad,Cosmic Jelly Pad,GooFidgets,GooCoast,Epic,34,JellyCube,purple_monster_burst,wet_pop_goo_pack,031/048,T_Card_031,#8A6BE0
+singularity_goo_core,Singularity Goo Core,GooFidgets,GooCoast,Mythic,130,GooBall,green_goo_burst,wet_pop_goo_pack,032/048,T_Card_032,#D6FF7A

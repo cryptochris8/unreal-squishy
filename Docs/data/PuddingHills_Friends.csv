@@ -1,0 +1,17 @@
+Name,DisplayName,Pack,Zone,Rarity,CoinReward,BodyArchetype,ParticlePreset,SfxSet,CardNumber,CardArtAsset,SuggestedTintHex
+soft_dumpling,Soft Dumpling,SquishyFoods,PuddingHills,Common,8,Dumpling,pink_soup_burst,soft_pop_food_pack,001/048,T_Card_001,#F7E6CE
+jelly_bun,Jelly Bun,SquishyFoods,PuddingHills,Common,10,JellyCube,blue_jelly_burst,soft_pop_food_pack,002/048,T_Card_002,#7FE7FF
+peach_mochi,Peach Mochi,SquishyFoods,PuddingHills,Common,8,Mochi,pink_soup_burst,soft_pop_food_pack,003/048,T_Card_003,#FFC9A8
+syrup_cube,Syrup Cube,SquishyFoods,PuddingHills,Common,9,JellyCube,blue_jelly_burst,soft_pop_food_pack,004/048,T_Card_004,#E8B06A
+cream_puff,Cream Puff,SquishyFoods,PuddingHills,Common,9,Dumpling,cream_puff_burst,soft_pop_food_pack,005/048,T_Card_005,#F3E2C0
+rice_ball_squish,Rice Ball Squish,SquishyFoods,PuddingHills,Common,8,Dumpling,cream_puff_burst,soft_pop_food_pack,006/048,T_Card_006,#F3F0E6
+marshmallow_puff,Marshmallow Puff,SquishyFoods,PuddingHills,Common,10,Dumpling,pink_soup_burst,soft_pop_food_pack,007/048,T_Card_007,#FBDDE8
+pudding_pop,Pudding Pop,SquishyFoods,PuddingHills,Common,10,JellyCube,cream_puff_burst,soft_pop_food_pack,008/048,T_Card_008,#D9A45B
+strawberry_dumpling,Strawberry Dumpling,SquishyFoods,PuddingHills,Rare,16,Dumpling,pink_soup_burst,soft_pop_food_pack,009/048,T_Card_009,#FF8FB8
+rainbow_jelly_bun,Rainbow Jelly Bun,SquishyFoods,PuddingHills,Rare,16,JellyCube,blue_jelly_burst,soft_pop_food_pack,010/048,T_Card_010,#C7A0FF
+sparkle_mochi,Sparkle Mochi,SquishyFoods,PuddingHills,Rare,16,Mochi,cream_puff_burst,soft_pop_food_pack,011/048,T_Card_011,#FFB7D5
+golden_syrup_cube,Golden Syrup Cube,SquishyFoods,PuddingHills,Rare,18,JellyCube,blue_jelly_burst,soft_pop_food_pack,012/048,T_Card_012,#FFD36E
+galaxy_dumpling,Galaxy Dumpling,SquishyFoods,PuddingHills,Epic,28,Dumpling,purple_monster_burst,soft_pop_food_pack,013/048,T_Card_013,#6E5BD0
+crystal_mochi,Crystal Mochi,SquishyFoods,PuddingHills,Epic,28,Mochi,blue_jelly_burst,soft_pop_food_pack,014/048,T_Card_014,#9BE8FF
+neon_dessert_blob,Neon Dessert Blob,SquishyFoods,PuddingHills,Epic,30,JellyCube,pink_soup_burst,soft_pop_food_pack,015/048,T_Card_015,#4DF0C0
+celestial_dumpling_core,Celestial Dumpling Core,SquishyFoods,PuddingHills,Mythic,120,Dumpling,cream_puff_burst,soft_pop_food_pack,016/048,T_Card_016,#FFE08A
