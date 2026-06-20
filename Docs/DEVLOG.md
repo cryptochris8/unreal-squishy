@@ -2,6 +2,15 @@
 
 Newest first. Format: **date — task — files/assets — what worked — what broke — next.**
 
+## 2026-06-20 — Character squish wired + GameMode + friends placed → PIE boots  (Claude)
+- **`BP_SquishyCharacter` fully wired:** `BeginPlay → AddSquishContext` (adds `IMC_Squishy`); `EnhancedInputActionIA_Squish (Triggered) → OnSquishPressed` (forward line trace → `BreakHitResult` → `CastToBP_SquishyFriend` → `Squish`). Compiles clean.
+- **`BP_SquishyGameMode`** (GameModeBase): DefaultPawn=`BP_SquishyCharacter`, GameState=`BP_SquishyGameState`. Set as `LVL_PuddingHills` World Settings **GameMode override**.
+- **Placed 9 `BP_SquishyFriend`** in a 3×3 grid in front of the PlayerStart (snap-to-ground) in `LVL_PuddingHills`.
+- **PIE boots clean:** log shows `Game class is 'BP_SquishyGameMode_C'`, "Server logged in", and "Enhanced Input local player subsystem has initialized" (proves `AddSquishContext` ran). No errors. (`StartPIE` reports "ended before warmup" but PIE is actually up — tooling false-negative.)
+- **Trace-height fix:** friends are ~72 cm tall (base on ground) but the capsule-center trace (~88 cm) flew *over* them → lowered `OnSquishPressed` start by 45 cm, range 450. Now the horizontal ray passes through the friend body.
+- **MCP/DSL lessons:** `write_graph_dsl` **replaces the whole graph** and **cannot recreate Enhanced Input event nodes** → put logic in **functions**, create the input event with `create_node "Input|EnhancedActionEvents|IA_<name>"`, and wire event→function with `create_node "CallFunction|<Fn>"` + `connect_pins` (pin_ids from `get_node_infos`). The DSL reader doesn't render input-event bodies, but `connected_pins` confirms wiring. Multi-output bind works: `(bind (a b ... hitActor) (Collision|BreakHitResult hit))` (HitActor = output index 9). `set_properties` sets class refs (`DefaultPawnClass`/`GameStateClass`/`DefaultGameMode`) via path strings.
+- **NEXT — first play-test (Chris):** press Play, WASD + mouse to a peach-mochi friend, **LMB ×3 → Happy Pop** → friend hides, respawns ~1.2 s, coins +8 on GameState. Then: squash-stretch/breathing juice, HUD coin pill, per-friend data-driven meshes, strip template blocks, Niagara sparkle.
+
 ## 2026-06-19 — Character input scaffolding (reparent + input assets)  (Claude)
 - **`BP_SquishyCharacter` reparented** to `/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter` → inherits camera, spring-arm, gentle movement, and Enhanced Input (Move/Look/Jump) for free. Compiles clean.
 - **Input assets:** template input lives in `/Game/Input/` (`IMC_Default`, `IA_Move/Look/Jump`). Created `IA_Squish` (duplicate of `IA_Jump` — a digital/bool action) and `IMC_Squishy` (duplicate of `IMC_Default`) in `/Game/SquishySmash/Input/`. Mapped **`IA_Squish` → Left Mouse Button** in `IMC_Squishy` (verified).
