@@ -2,6 +2,16 @@
 
 Newest first. Format: **date — task — files/assets — what worked — what broke — next.**
 
+## 2026-06-19 — Character input scaffolding (reparent + input assets)  (Claude)
+- **`BP_SquishyCharacter` reparented** to `/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter` → inherits camera, spring-arm, gentle movement, and Enhanced Input (Move/Look/Jump) for free. Compiles clean.
+- **Input assets:** template input lives in `/Game/Input/` (`IMC_Default`, `IA_Move/Look/Jump`). Created `IA_Squish` (duplicate of `IA_Jump` — a digital/bool action) and `IMC_Squishy` (duplicate of `IMC_Default`) in `/Game/SquishySmash/Input/`. Mapped **`IA_Squish` → Left Mouse Button** in `IMC_Squishy` (verified).
+- **MCP findings (important):**
+  - `BlueprintTools.create` will NOT make non-Blueprint assets (e.g. `InputAction`) — it errors with a modal dialog (hung the server until dismissed). Use `AssetTools.duplicate` of an existing asset of that type instead.
+  - `ObjectTools.set_properties` on an array property **replaces** the whole array (so `IMC_Squishy` is now squish-only — intended; it rides alongside the inherited `IMC_Default`).
+  - `get_properties` can't read `IMC_Default.Mappings` (returns `[]` even though the template clearly has them) — its mappings aren't API-exposed, so never edit the template IMC; work on duplicates.
+  - Enhanced Input events read as `(event EnhancedInputActionIA_Jump (ActionValue ElapsedSeconds TriggeredSeconds InputAction) …)`. The template adds its mapping context in the **PlayerController**, not the character graph.
+- **Next (character graph, next session):** add `EnhancedInputActionIA_Squish` handler → camera-forward line trace (~400 cm) → if hit is `BP_SquishyFriend`, call its `Squish`; ensure `IMC_Squishy` is added (BeginPlay override w/ EnhancedInput subsystem, or via the PC). Then `BP_SquishyGameMode` (DefaultPawn=BP_SquishyCharacter, GameState=BP_SquishyGameState), `load_level` LVL_PuddingHills, strip template blocks, place ~12 friends, **PIE**.
+
 ## 2026-06-19 — BP_SquishyFriend squish loop authored (graph DSL)  (Claude)
 - **Authored the friend's core loop** in the EventGraph via `write_graph_dsl` — compiles clean with **warnings-as-errors**:
   - `Squish` (custom event, public — callable by the character): if `not Popped` AND `GameTime - LastSquishTime >= SquishCooldown(0.12)` → set LastSquishTime, `Joy += JoyPerSquish(0.34)`; when `Joy >= 1.0` → set `Popped`, `SetActorHiddenInGame(true)`, `SetActorEnableCollision(false)`, `SetTimerByFunctionName("Respawn", RespawnDelay 1.2)`, then cast GameState→`BP_SquishyGameState` and `AddSparkleCoins(CoinReward)`.
