@@ -36,6 +36,31 @@ Build via `editor_toolset.*` tools where one exists; fall back to Unreal **Pytho
 
 > Gotcha: `call_tool` wants the **bare** `tool_name` (e.g. `get_current_level`) with `toolset_name` passed **separately**. Passing the fully-qualified `editor_toolset.toolsets.scene.SceneTools.get_current_level` fails with "Unknown tool."
 
+## ⚠️ HARD RULE — player input must use LEGACY key-event nodes, NOT Enhanced Input events
+
+**Do NOT bind gameplay input via `EnhancedInputAction` event nodes when building through MCP.** They do not fire. Confirmed by UE 5.8 engine-source analysis + the proven Gnarly project (2026-06-21, after a long debugging session):
+
+- An `EnhancedInputAction IA_X` event node's runtime binding is generated **only during a full Blueprint compile**, by `K2Node_EnhancedInputAction::ExpandNode()`, from the node's internal `InputAction` property + a connected trigger pin. A node made via `create_node`/MCP doesn't reliably populate that binding, so the event **silently never executes** — on the pawn OR the controller. (`IMC`/subsystem/config were all correct; mouse-look worked; the action event just never fired.)
+- The DSL can't author Enhanced Input event **bodies** anyway (`write_graph_dsl` "cannot recreate Enhanced Input event nodes"), and IMC mapping arrays don't round-trip through `ObjectTools` (`get_properties` reads `IMC_Default.Mappings` as `[]`; `set_properties` **replaces** the whole array and rejects ambiguous size+content changes).
+
+**✅ The working recipe (playtested):** legacy key-event nodes wired straight to a function — no `IA_`, no `IMC`, no subsystem:
+1. Author the logic as a Blueprint **function** via `write_graph_dsl` (e.g. `OnSquishPressed`).
+2. `create_node` a legacy key event: `Input|MouseEvents|LeftMouseButton` or `Input|KeyboardEvents|<Key>` (e.g. `…|F`). Outputs: `Pressed`/`Released`/`Key`.
+3. `create_node` `CallFunction|<YourFn>`.
+4. `connect_pins` the key event's **`Pressed`** (output index 0) → the function call's **`execute`** (input index 0). One exec input accepts multiple key events.
+5. Compile + save. These fire through the `EnhancedInputComponent` (backward-compatible) regardless of the project's Enhanced Input defaults.
+
+*(Camera/movement from the ThirdPerson template still work via the template's own Enhanced Input setup — only OUR custom inputs use legacy key events.)*
+
+## Verified MCP/DSL gotchas (this project)
+- **`call_tool`**: pass the **bare** `tool_name` + separate `toolset_name` (fully-qualified name → "Unknown tool").
+- **Components on a Blueprint**: `PrimitiveTools.add_sphere/cube/...` on the **CDO** (`Default__BP_*_C`) persists to the SCS (reads `None` on the CDO but a spawned instance has the real component).
+- **Graph DSL**: custom events need `add_event` first, then `(event Custom|Name …)`. Bool var `bX` → accessors `Get/SetX` (the `b` is stripped). A multi-exec node (Cast, latent) **terminates** the enclosing exec flow — put must-run logic before it. Multi-output bind works: `(bind (a b … hitActor) (Collision|BreakHitResult hit))`. `write_graph_dsl` replaces the WHOLE graph.
+- **`create`** makes Blueprints only — for `InputAction`/other asset types use `AssetTools.duplicate` of an existing asset (creating an `InputAction` via `create` pops a modal that **hangs the MCP server** until dismissed).
+- **Class-ref properties** (`DefaultPawnClass`, `GameStateClass`, `DefaultGameMode`, `PlayerControllerClass`) set via `ObjectTools.set_properties` with the `…_C` path string.
+- **Bulk ops**: `ProgrammaticToolset.execute_tool_script` (call `get_execution_environment` first) — used to import all 51 FBX in one call.
+- **`StartPIE`** may report "PIE ended before warmup" while PIE is actually running (false negative — check `IsPIERunning`).
+
 ## Good MCP tasks
 Place/spawn friend pads & landmarks · list/inspect Blueprints in `Content/SquishySmash` · set actor transforms · create a material instance for a friend tint · build a greybox land layout · run PIE + capture a clip.
 

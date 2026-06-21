@@ -17,7 +17,9 @@ See `Docs/BOOTSTRAP_HANDOFF_PROMPT.md`. **Requires Chris (manual editor steps).*
 - ◐ `LVL_PuddingHills` greybox: duplicated from template (lit/sky/floor/PlayerStart) — *still has template playground blocks; strip + add hills/windmill + bloom pass*
 - ☑ `BP_SquishyCharacter` reparented to `BP_ThirdPersonCharacter` + `IA_Squish`/`IMC_Squishy` (LMB) + `OnSquishPressed` trace→`Squish` + `AddSquishContext` on BeginPlay — *Claude, 2026-06-20*
 - ☑ `BP_SquishyGameMode` (DefaultPawn=`BP_SquishyCharacter`, GameState=`BP_SquishyGameState`) set as `LVL_PuddingHills` GameMode override; **9 friends placed; PIE boots clean** — *Claude, 2026-06-20*
-- ☐ **PLAY-TEST (Chris):** press Play → walk → LMB ×3 on a friend → Happy Pop → coins up → respawn. Report feel/bugs.
+- ☑ **PLAYABLE:** F/LMB squishes friends in PIE (Chris-confirmed 2026-06-21). Input uses **legacy key-event nodes**, NOT Enhanced Input events (see `MCP_NOTES.md` hard rule).
+- ☐ Confirm full pop feel: 3 squishes → sparkle → coins up → respawn ~1.2s. Then HUD coin pill.
+- ☐ Cleanup: prune dead `IA_Squish`/`IMC_Squishy` + `AddSquishContext`/`DoAddSquishContext`/`RelaySquish` leftovers.
 - ◐ `BP_SquishyFriend`: data vars + `Body`=`SM_peach_mochi` (scale 0.5, Z+36) + **`Squish`/`Respawn` graph DONE** (cooldown→Joy→Happy Pop: hide+disable collision+1.2s respawn+award coins; compiles clean) — *deferred juice: squash-stretch + breathing bob*
 - ☑ **Imported all 51 squishy 3D meshes** → `/Game/SquishySmash/Meshes/SM_<name>` (geometry-only); mapping = FriendId `Name`→`SM_<Name>`. *Claude, 2026-06-19*
 - ☐ Happy Pop: at Joy≥1 → swell → `NS_HappyPop` sparkle burst → award coins → hide → respawn ~1.2s

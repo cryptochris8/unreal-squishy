@@ -2,6 +2,14 @@
 
 Newest first. Format: **date — task — files/assets — what worked — what broke — next.**
 
+## 2026-06-21 — SQUISH WORKS IN PIE 🎉 (input root-caused + fixed)  (Claude + Chris)
+- **The core loop is playable:** press `F` / left-click near a friend → squish → (3×) Happy Pop. Confirmed by Chris in PIE.
+- **Root cause of the long input failure (3 parallel research agents converged):** MCP-created **`EnhancedInputAction` event nodes never fire** — their runtime binding is only generated during a full compile from the node's internal `InputAction` property (via `K2Node_EnhancedInputAction::ExpandNode`), which `create_node` doesn't produce. Failed identically on the character AND a custom PlayerController. Config/subsystem/contexts were all fine (mouse-look worked the whole time).
+- **Fix (the proven Gnarly recipe):** dropped the `IA_Squish`/`IMC_Squishy` event path; bound **legacy key-event nodes** `Input|MouseEvents|LeftMouseButton` + `Input|KeyboardEvents|F` → `CallFunction|OnSquishPressed` via `create_node` + `connect_pins`. Fires reliably. → **documented as a HARD RULE in `Docs/MCP_NOTES.md`.**
+- Earlier wins this session (kept): `BP_SquishyPlayerController` (adds IMC_Default/MouseLook/Squishy after a tick delay → movement + mouse-look) set as GameMode PC; `OnSquishPressed` forward line-trace (start −45 cm, 450 reach) → `BreakHitResult` → cast → friend `Squish`; debug prints removed.
+- **Dead-but-harmless leftovers to prune later:** the `IA_Squish`/`IMC_Squishy` assets, the character's `AddSquishContext`/`DoAddSquishContext` + dead IA event node, the PC's `RelaySquish` + IA event node.
+- **Next:** confirm full pop feel (3 squishes → sparkle → coins → respawn); then HUD coin pill, squash-stretch + breathing juice, per-friend data-driven meshes, strip template playground blocks.
+
 ## 2026-06-20 — Character squish wired + GameMode + friends placed → PIE boots  (Claude)
 - **`BP_SquishyCharacter` fully wired:** `BeginPlay → AddSquishContext` (adds `IMC_Squishy`); `EnhancedInputActionIA_Squish (Triggered) → OnSquishPressed` (forward line trace → `BreakHitResult` → `CastToBP_SquishyFriend` → `Squish`). Compiles clean.
 - **`BP_SquishyGameMode`** (GameModeBase): DefaultPawn=`BP_SquishyCharacter`, GameState=`BP_SquishyGameState`. Set as `LVL_PuddingHills` World Settings **GameMode override**.
