@@ -15,17 +15,18 @@ See `Docs/BOOTSTRAP_HANDOFF_PROMPT.md`. **Requires Chris (manual editor steps).*
 ## M1 — Core squish loop (the heart) — Pudding Hills greybox
 - ☑ `Content/SquishySmash/` folder tree (per `CONTENT_STRUCTURE_PLAN.md`) — *Claude, 2026-06-19*
 - ◐ `LVL_PuddingHills` greybox: duplicated from template (lit/sky/floor/PlayerStart) — *still has template playground blocks; strip + add hills/windmill + bloom pass*
-- ☑ `BP_SquishyCharacter` reparented to `BP_ThirdPersonCharacter` + `IA_Squish`/`IMC_Squishy` (LMB) + `OnSquishPressed` trace→`Squish` + `AddSquishContext` on BeginPlay — *Claude, 2026-06-20*
-- ☑ `BP_SquishyGameMode` (DefaultPawn=`BP_SquishyCharacter`, GameState=`BP_SquishyGameState`) set as `LVL_PuddingHills` GameMode override; **9 friends placed; PIE boots clean** — *Claude, 2026-06-20*
-- ☑ **PLAYABLE:** F/LMB squishes friends in PIE (Chris-confirmed 2026-06-21). Input uses **legacy key-event nodes**, NOT Enhanced Input events (see `MCP_NOTES.md` hard rule).
-- ☐ Confirm full pop feel: 3 squishes → sparkle → coins up → respawn ~1.2s. Then HUD coin pill.
-- ☐ Cleanup: prune dead `IA_Squish`/`IMC_Squishy` + `AddSquishContext`/`DoAddSquishContext`/`RelaySquish` leftovers.
-- ◐ `BP_SquishyFriend`: data vars + `Body`=`SM_peach_mochi` (scale 0.5, Z+36) + **`Squish`/`Respawn` graph DONE** (cooldown→Joy→Happy Pop: hide+disable collision+1.2s respawn+award coins; compiles clean) — *deferred juice: squash-stretch + breathing bob*
+- ☑ `BP_SquishyCharacter` reparented to `BP_ThirdPersonCharacter`; squish input = **legacy LMB/F key events → `OnSquishPressed`** (Enhanced-Input events don't bind via MCP — see `MCP_NOTES.md`). `OnSquishPressed` = `GetAllActorsOfClass(Friend)` → `GetDistanceTo ≤ 350` → `Squish` (proximity, no trace). — *2026-06-21*
+- ☑ `BP_SquishyGameMode` (DefaultPawn=`BP_SquishyCharacter`, GameState=`BP_SquishyGameState`, PC=`BP_SquishyPlayerController` which adds IMC_Default/MouseLook + creates HUD) set as `LVL_PuddingHills` GameMode override; **9 friends placed; PIE boots clean** — *2026-06-20/21*
+- ☑ **PLAYABLE + tuned (Chris-confirmed 2026-06-21):** walk up → F/LMB → friends Happy Pop on 3rd squish → coins climb on HUD pill → respawn ~1.2s. Debug prints removed; dead input nodes pruned.
+- ☑ `BP_SquishyFriend`: data vars + `Body`=`SM_peach_mochi` (scale 0.5, Z+36) + `Squish`/`Respawn` graph (cooldown→Joy→Happy Pop: hide+disable collision+1.2s respawn+award coins) — *deferred juice: squash-stretch + breathing bob*
 - ☑ **Imported all 51 squishy 3D meshes** → `/Game/SquishySmash/Meshes/SM_<name>` (geometry-only); mapping = FriendId `Name`→`SM_<Name>`. *Claude, 2026-06-19*
-- ☐ Happy Pop: at Joy≥1 → swell → `NS_HappyPop` sparkle burst → award coins → hide → respawn ~1.2s
-- ☐ `BP_FriendPad` + spawner; place ~12 across the land
-- ◐ `BP_SquishyGameState` coins (SparkleCoins, FriendsWoken vars added) + `WBP_HUD` coin pill *(HUD not started)*
-- ☐ **Playable checkpoint:** walk → squish → pop → coins go up. Capture a clip.
+- ☑ `BP_SquishyGameState` coins + `WBP_HUD` coin pill (pink rounded pill, top-left, Tick-reads SparkleCoins) — *2026-06-21*
+- ☑ **Squish JUICE — squash-stretch + idle breathing bob** on `BP_SquishyFriend` (Tick-driven `SquishImpulse` spring via FInterpTo + Sin breathing on `Body` scale; no timeline/assets). PIE-clean on all 9 friends. — *Claude, 2026-06-21*
+- ☑ **Happy Pop sparkle (batch B):** `NS_HappyPop` (from engine template `Systems/RadialBurst` — omnidirectional sprite burst + ribbon trails, auto-destroy) spawned at the friend's location on pop, before it hides. Compiles UpToDate, wired in `BP_SquishyFriend.Squish` pop branch. — *Claude, 2026-06-21* · *optional polish: recolor to warm pink sparkles + Sparkle Coin pickup feel*
+- ☐ **Cleanup:** strip `BP_SquishyCharacter`'s leftover `AddSquishContext` debug prints (`ADD SQUISH CONTEXT RUN`/`…ADDED NOW`); fix coin-pill ✨ (U+2728) font glyph (use a font with it or drop the emoji).
+- ☐ `BP_FriendPad` + spawner (optional — friends already self-respawn; pads = nicer placement/spread)
+- ◐ `LVL_PuddingHills`: ☑ **stripped 53 template playground blocks** (kept Floor) + ☑ **re-grounded 9 friends to Z=0** (they'd snapped onto block-tops) + ☑ PlayerStart grounded + ☑ **`NS_HappyPop` sparkles recolored warm pink** (all 3 emitters, *Claude 2026-06-23*). ☐ Still: add hills/windmill landmark + warm bloom pass; per-friend tints/`M_JellyPlush` (friends are gray-tan geometry).
+- ☐ Capture a 15–30s clip of the working loop → `Docs/MARKETING_CLIPS.md`
 
 ## M2 — Collect: capsule + Squishy Book
 - ☐ `DT_SquishyFriends` — import the **pre-staged `Docs/data/PuddingHills_Friends.csv`** (001–016, exact rarities/coins; define `F_SquishyFriend` struct first)
